@@ -16,8 +16,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           return throwError(err.statusText);
         }
 
+        // Application Errors - the errors thrown by API (500 internal server errors.)
         if (err instanceof HttpErrorResponse) {
-          // Application Errors - the errors thrown by API (500 internal server errors.)
           const applicationError = err.headers.get('Application-Error');
           if (applicationError) {
             return throwError(applicationError);
