@@ -7,6 +7,9 @@ import {
   Validators,
   FormBuilder
 } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { User } from '../_models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,14 +18,17 @@ import {
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  model: any = {};
+  // model: any = {};
+  user: User;
   registerForm: FormGroup;
+  bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(
     private authService: AuthService,
+    private router: Router,
     private alertify: AlertifyService,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     // this.registerForm = new FormGroup(
@@ -37,6 +43,9 @@ export class RegisterComponent implements OnInit {
     //   },
     //   this.passwordMatchValidator
     // );
+    this.bsConfig = {
+      containerClass: 'theme-default'
+    };
     this.createRegisterForm();
   }
 
@@ -80,7 +89,23 @@ export class RegisterComponent implements OnInit {
     //     this.alertify.error(error);
     //   }
     // );
-    console.log(this.registerForm.value);
+
+    if (this.registerForm.valid) {
+      this.user = Object.assign({}, this.registerForm.value);
+      this.authService.register(this.user).subscribe(
+        () => {
+          this.alertify.success('Registration successful.');
+        },
+        error => {
+          this.alertify.error(error);
+        },
+        () => {
+          this.authService.login(this.user).subscribe(() => {
+            this.router.navigate(['/members']);
+          });
+        }
+      );
+    }
   }
 
   cancel() {
