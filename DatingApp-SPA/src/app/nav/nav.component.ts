@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { Role } from '../_models/role.enum';
 
 @Component({
   selector: 'app-nav',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   model: any = {};
   photoUrl: string;
+  Role = Role;
 
   constructor(
     public authService: AuthService,

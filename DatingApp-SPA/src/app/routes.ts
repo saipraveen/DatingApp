@@ -13,6 +13,7 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { Role } from './_models/role.enum';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,35 +25,35 @@ export const appRoutes: Routes = [
       {
         path: 'members',
         component: MemberListComponent,
-        resolve: { users: MemberListResolver }
+        resolve: { users: MemberListResolver },
       },
       {
         path: 'members/:id',
         component: MemberDetailComponent,
-        resolve: { user: MemberDetailResolver }
+        resolve: { user: MemberDetailResolver },
       },
       {
         path: 'member/edit',
         component: MemberEditComponent,
         resolve: { user: MemberEditResolver },
-        canDeactivate: [PreventUnsavedChangesGuard]
+        canDeactivate: [PreventUnsavedChangesGuard],
       },
       {
         path: 'messages',
         component: MessagesComponent,
-        resolve: { messages: MessagesResolver }
+        resolve: { messages: MessagesResolver },
       },
       {
         path: 'lists',
         component: ListsComponent,
-        resolve: { users: ListsResolver }
+        resolve: { users: ListsResolver },
       },
       {
         path: 'admin',
         component: AdminPanelComponent,
-        data: { roles: ['Admin', 'Moderator'] }
-      }
-    ]
+        data: { roles: [Role.Admin, Role.Moderator] },
+      },
+    ],
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

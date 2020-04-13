@@ -17,6 +17,7 @@ export class MemberListResolver implements Resolve<User[]> {
     private alertify: AlertifyService
   ) {}
 
+  // FIXMEOS -- here the return type should be Observable<PaginatedResult<User[]>>, check how this is working.
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     // FIXMEOS -- check why this tslint waring is shown.
     // tslint:disable-next-line: no-string-literal
